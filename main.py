@@ -17,17 +17,30 @@ def generate_dataframe(grid):
     output = pd.DataFrame(grid).astype(object)
     xsize = output.shape[0] - 1
     ysize = output.shape[1] - 1
+    # convert grid numbers to include boolean
+    for i in range(1, xsize):
+        for j in range(1, ysize):
+            temp = output.at[i,j]
+            output.at[i,j] = [temp, True]
     return output, xsize, ysize
 
+# define helper function for adding values based on operation
+def addition_slice(x):
+    total = 0
+    for gridnum in x:
+        if gridnum[1]:
+            total += gridnum[0]
+    return total
 
 # generate end values
-def generate_intermediate(type, df_nums):
+def generate_intermediate(operation, df_nums):
     nums = df_nums[0]
     xsize = df_nums[1]
     ysize = df_nums[2]
-    if type == "addition":
+    if operation == "addition":
         for i in range(1, xsize):
-            nums.at[i, ysize] = sum(nums.loc[i,1:ysize-1])
-            nums.at[xsize, i] = sum(nums.loc[1:ysize-1, i])
+            temp = nums.loc[i,1:ysize-1]
+            nums.at[i, ysize] = addition_slice(temp)
+            temp = nums.loc[1:ysize-1, i]
+            nums.at[xsize, i] = addition_slice(temp)
     return nums
-
