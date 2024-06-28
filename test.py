@@ -40,4 +40,16 @@ def test_intermediate_grid_addition():
     assert inter.at[6,4] == 7+8+4+2+8
     assert inter.at[6,5] == 2+6+3+4+9
 
+def test_addition_slice():
+    test = [[8, True], [4, True], [4, True], [7, True], [2, True]]
+    assert main.addition_slice(test) == 25
+
+    test = [[8, True], [4, True], [4, False], [7, True], [2, True]]
+    assert main.addition_slice(test) == 21
+
+    test = [[8, False], [4, True], [4, False], [7, True], [2, True]]
+    assert main.addition_slice(test) == 13
+
+    test = [[8, False], [4, False], [4, False], [7, False], [2, False]]
+    assert main.addition_slice(test) == 0
 
