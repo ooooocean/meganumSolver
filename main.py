@@ -1,9 +1,6 @@
 import pandas as pd
 
 # take input
-
-# input should be a y+1 by y+1 grid, with no entries in the corners
-
 input = [[0,14,13,20,21,8,0],
           [17,8,4,4,7,2,17],
           [19,4,4,1,8,6,19],
@@ -33,10 +30,8 @@ def addition_slice(x):
     return total
 
 # generate end values
-def generate_intermediate(operation, df_nums):
+def generate_intermediate(operation, df_nums, xsize, ysize):
     nums = df_nums[0]
-    xsize = df_nums[1]
-    ysize = df_nums[2]
     if operation == "addition":
         for i in range(1, xsize):
             temp = nums.loc[i,1:ysize-1]
@@ -44,3 +39,9 @@ def generate_intermediate(operation, df_nums):
             temp = nums.loc[1:ysize-1, i]
             nums.at[xsize, i] = addition_slice(temp)
     return nums
+
+grid = generate_dataframe(input)
+xsize = grid[1]
+ysize = grid[2]
+
+# perform logic on each row

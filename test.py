@@ -27,7 +27,7 @@ def test_intermediate_grid_addition():
 
     output = main.generate_dataframe(puzzle)
 
-    inter = main.generate_intermediate("addition",output)
+    inter = main.generate_intermediate("addition",output, 6, 6)
     assert inter.at[1,6] == 8+4+4+7+2
     assert inter.at[2,6] == 4+4+1+8+6
     assert inter.at[3,6] == 5+6+6+4+3
